@@ -11,7 +11,7 @@ CONST
   ID_BUTTON_ON_CLICK_EVENT = 1;
   WIZARDFORM_WIDTH_NORMAL = 600;
   WIZARDFORM_HEIGHT_NORMAL = 400;
-  WIZARDFORM_HEIGHT_MORE = 503;
+  WIZARDFORM_HEIGHT_MORE = 470;
 
 VAR
   label_wizardform_main, label_messagebox_main, label_wizardform_more_product_already_installed, label_messagebox_information, label_messagebox_title, label_wizardform_title, label_install_progress : TLabel;
@@ -273,6 +273,7 @@ var
   ResultStr: String;
   ResultCode: Integer;
 BEGIN
+  #ifdef UninstallBefore
   if isFirst then
   begin
   if RegQueryStringValue(HKLM, PRODUCT_REGISTRY_KEY_64, 'UninstallString', ResultStr) then
@@ -282,6 +283,7 @@ BEGIN
   end;
   end;
   isFirst := FALSE;
+  #endif
   WizardForm.NextButton.OnClick(WizardForm);
 END;
 
@@ -743,14 +745,12 @@ END;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-uninspath, uninsname, NewUninsName, MyAppName: string;
+uninspath, uninsname, NewUninsName;
 begin
 if CurStep=ssDone then
 begin
 // 指定新的卸载文件名（不包含扩展名），请相应修改！
 NewUninsName := '卸载';
-// 应用程序名称，与 [SEUTP] 段的 AppName 必须一致，请相应修改！
-MyAppName := '樱花镇客户端1.17.1';
 // 以下重命名卸载文件
 uninspath:= ExtractFilePath(ExpandConstant('{uninstallexe}'));
 uninsname:= Copy(ExtractFileName(ExpandConstant('{uninstallexe}')),1,8);
