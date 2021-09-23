@@ -745,7 +745,7 @@ END;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-uninspath, uninsname, NewUninsName;
+uninspath, uninsname, NewUninsName : string;
 begin
 if CurStep=ssDone then
 begin
