@@ -27,7 +27,7 @@
   #define MyAppExeName "启动游戏-HMCL-3.3.188.exe"
   #define MyAppMutex MyAppName
 #else             ;32位的(推荐)
-  #define MyAppID "{8A8911D0-DD85-C81F-E182-0BF8C5893EFB}"
+  #define MyAppID "{2895C600-B509-4A85-BB2F-EB88CBD75974}"
   #define MyAppName "我的客户端"
   #define MyAppExeName "启动游戏-HMCL-3.3.188.exe"
   #define MyAppMutex MyAppName

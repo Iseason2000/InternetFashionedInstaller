@@ -683,9 +683,9 @@ BEGIN
     BEGIN
       Parent := WizardForm;
       AutoSize := FALSE;
-      Left := 547;
+      Left := 538;
       Top := 349;
-      Width := 30;
+      Width := 40;
       Height := 30;
       Font.Name := 'Microsoft YaHei';
       Font.Size := 10;
