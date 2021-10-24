@@ -16,6 +16,11 @@
 ;指定是否只能安装新版本，而不能用旧版本覆盖新版本
 #define OnlyInstallNewVersion 
 
+;是否启用界面圆角
+#define EnableRoundRect
+;是否启用圆角数值(越大越圆)
+#define RoundRectData 20
+
 #ifdef x64Build  ;64位的
   #define MyAppID "{D388FE9E-1F93-BFFA-CC14-AD638CC123BA}"
   #define MyAppName "我的客户端"
@@ -121,7 +126,7 @@ Name: "zh_CN"; MessagesFile: ".\lang\ChineseSimplified.isl"
 
 [Files]
 ;包含项目文件app目录下的全部文件
-Source: ".\app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: ".\app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;包含所有临时资源文件(勿删)
 Source: ".\tmp\*"; DestDir: "{tmp}"; Flags: dontcopy solidbreak nocompression; Attribs: hidden system
 ;包含的文件,指定文件

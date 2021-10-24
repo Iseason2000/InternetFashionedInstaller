@@ -181,6 +181,9 @@ BEGIN
   BEGIN
     WizardForm.Height := WIZARDFORM_HEIGHT_MORE;
     image_wizardform_background := ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\background_welcome_more.png'), 0, 0, WIZARDFORM_WIDTH_NORMAL, WIZARDFORM_HEIGHT_MORE, FALSE, TRUE);
+#ifdef EnableRoundRect
+	shape_form_round(WizardForm,{#RoundRectData});
+#endif
     edit_target_path.Show();
     BtnSetVisibility(button_browse, TRUE);
 #ifdef RegisteAssociations
@@ -207,6 +210,9 @@ BEGIN
 #endif
     WizardForm.Height := WIZARDFORM_HEIGHT_NORMAL;
     image_wizardform_background := ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\background_welcome.png'), 0, 0, WIZARDFORM_WIDTH_NORMAL, WIZARDFORM_HEIGHT_NORMAL, FALSE, TRUE);
+#ifdef EnableRoundRect
+	shape_form_round(WizardForm,{#RoundRectData});
+#endif
     BtnSetVisibility(button_customize_setup, TRUE);
     BtnSetVisibility(button_uncustomize_setup, FALSE);
     is_wizardform_show_normal := TRUE;
@@ -423,6 +429,9 @@ BEGIN
   button_messagebox_cancel := BtnCreate(messagebox_close.Handle, 293, 150, 76, 28, ExpandConstant('{tmp}\button_cancel.png'), 0, FALSE);
   BtnSetEvent(button_messagebox_cancel, ID_BUTTON_ON_CLICK_EVENT, WrapBtnCallback(@button_messagebox_cancel_on_click, 1));
   ImgApplyChanges(messagebox_close.Handle);
+#ifdef EnableRoundRect
+	shape_form_round(messagebox_close,{#RoundRectData});
+#endif
 END;
 
 //释放安装程序时调用的脚本
@@ -612,6 +621,9 @@ BEGIN
   PBOldProc := SetWindowLong(WizardForm.ProgressGauge.Handle, -4, PBCallBack(@PBProc, 4));
   ImgApplyChanges(WizardForm.Handle);
   messagebox_close_create();
+#ifdef EnableRoundRect
+	shape_form_round(WizardForm,{#RoundRectData});
+#endif
 END;
 
 //安装程序销毁时会调用这个函数
@@ -646,6 +658,9 @@ BEGIN
 #endif
     WizardForm.Height := WIZARDFORM_HEIGHT_NORMAL;
     ImgApplyChanges(WizardForm.Handle);
+#ifdef EnableRoundRect
+	shape_form_round(WizardForm,{#RoundRectData});
+#endif
   END;
   IF (CurPageID = wpInstalling) THEN
   BEGIN
