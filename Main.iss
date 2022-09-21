@@ -91,11 +91,11 @@ AllowCancelDuringInstall=no
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 ;64位版本的默认安装位置
-DefaultDirName=D:\{#MyAppName}
+DefaultDirName={userappdata}\{#MyAppName}
 #else
 ArchitecturesAllowed=x86 x64
 ;32位版本的默认安装位置
-DefaultDirName=D:\{#MyAppName}
+DefaultDirName={userappdata}\{#MyAppName}
 #endif
 #ifdef Windows7SP1AndNewer
 MinVersion=0,6.1.7601

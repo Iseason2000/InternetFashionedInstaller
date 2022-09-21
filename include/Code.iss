@@ -1,6 +1,6 @@
-//ÎªÁË·½±ã¹ÜÀí£¬¾Í½«[Code]Çø¶Îµ¥¶ÀÄÃ³öÀ´ÁË
+ï»¿//ä¸ºäº†æ–¹ä¾¿ç®¡ç†ï¼Œå°±å°†[Code]åŒºæ®µå•ç‹¬æ‹¿å‡ºæ¥äº†
 
-//ÒıÈëbotva2µÄº¯ÊıÉùÃ÷
+//å¼•å…¥botva2çš„å‡½æ•°å£°æ˜
 #include ".\botva2.iss"
 
 [Code]
@@ -22,7 +22,7 @@ VAR
   version_installed_before : STRING;
   messagebox_close : TSetupForm;
 
-//µ÷ÓÃÕâ¸öº¯Êı¿ÉÒÔÊ¹¾ØĞÎ´°¿Ú×ª±äÎªÔ²½Ç¾ØĞÎ´°¿Ú
+//è°ƒç”¨è¿™ä¸ªå‡½æ•°å¯ä»¥ä½¿çŸ©å½¢çª—å£è½¬å˜ä¸ºåœ†è§’çŸ©å½¢çª—å£
 PROCEDURE shape_form_round(aForm : TForm; edgeSize : INTEGER);
 VAR
   FormRegion : LONGWORD;
@@ -31,7 +31,7 @@ BEGIN
   SetWindowRgn(aForm.Handle, FormRegion, TRUE);
 END;
 
-//Õâ¸öº¯ÊıµÄ×÷ÓÃÊÇÅĞ¶ÏÊÇ·ñÒÑ¾­°²×°ÁË½«Òª°²×°µÄ²úÆ·£¬ÈôÒÑ¾­°²×°£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+//è¿™ä¸ªå‡½æ•°çš„ä½œç”¨æ˜¯åˆ¤æ–­æ˜¯å¦å·²ç»å®‰è£…äº†å°†è¦å®‰è£…çš„äº§å“ï¼Œè‹¥å·²ç»å®‰è£…ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 FUNCTION is_installed_before() : BOOLEAN;
 BEGIN
 #ifndef x64Build
@@ -85,7 +85,7 @@ BEGIN
 #endif
 END;
 
-//Õâ¸öº¯ÊıµÄ×÷ÓÃÊÇÅĞ¶ÏÊÇ·ñÕıÔÚ°²×°¾É°æ±¾£¨ÈôÏµÍ³ÖĞÒÑ¾­°²×°ÁË½«Òª°²×°µÄ²úÆ·£©£¬ÊÇÔò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+//è¿™ä¸ªå‡½æ•°çš„ä½œç”¨æ˜¯åˆ¤æ–­æ˜¯å¦æ­£åœ¨å®‰è£…æ—§ç‰ˆæœ¬ï¼ˆè‹¥ç³»ç»Ÿä¸­å·²ç»å®‰è£…äº†å°†è¦å®‰è£…çš„äº§å“ï¼‰ï¼Œæ˜¯åˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 FUNCTION is_installing_older_version() : BOOLEAN;
 VAR
   installedVer : ARRAY[1..10] OF LONGINT;
@@ -162,19 +162,19 @@ BEGIN
   Result := FALSE;
 END;
 
-//Ö÷½çÃæ¹Ø±Õ°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//ä¸»ç•Œé¢å…³é—­æŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_close_on_click(hBtn : HWND);
 BEGIN
   WizardForm.CancelButton.OnClick(WizardForm);
 END;
 
-//Ö÷½çÃæ×îĞ¡»¯°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//ä¸»ç•Œé¢æœ€å°åŒ–æŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_minimize_on_click(hBtn : HWND);
 BEGIN
   SendMessage(WizardForm.Handle, WM_SYSCOMMAND, 61472, 0);
 END;
 
-//Ö÷½çÃæ×Ô¶¨Òå°²×°°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//ä¸»ç•Œé¢è‡ªå®šä¹‰å®‰è£…æŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_customize_setup_on_click(hBtn : HWND);
 BEGIN
   IF is_wizardform_show_normal THEN
@@ -185,6 +185,8 @@ BEGIN
 	shape_form_round(WizardForm,{#RoundRectData});
 #endif
     edit_target_path.Show();
+    edit_target_path.ReadOnly := TRUE;
+
     BtnSetVisibility(button_browse, TRUE);
 #ifdef RegisteAssociations
     BtnSetVisibility(checkbox_setdefault, TRUE);
@@ -192,18 +194,18 @@ BEGIN
     BtnSetVisibility(button_customize_setup, FALSE);
     BtnSetVisibility(button_uncustomize_setup, TRUE);
 #ifndef PortableBuild
-    IF is_installed_before() THEN
-    BEGIN
-      edit_target_path.Enabled := FALSE;
-      BtnSetEnabled(button_browse, FALSE);
-      label_wizardform_more_product_already_installed.Show();
-    END;
+    //IF is_installed_before() THEN
+    //BEGIN
+    //  edit_target_path.Enabled := FALSE;
+    //  BtnSetEnabled(button_browse, FALSE);
+      //label_wizardform_more_product_already_installed.Show()
+    //END;
 #endif
     is_wizardform_show_normal := FALSE;
   END ELSE
   BEGIN
     edit_target_path.Hide();
-    label_wizardform_more_product_already_installed.Hide();
+    //label_wizardform_more_product_already_installed.Hide();
     BtnSetVisibility(button_browse, FALSE);
 #ifdef RegisteAssociations
     BtnSetVisibility(checkbox_setdefault, FALSE);
@@ -220,20 +222,20 @@ BEGIN
   ImgApplyChanges(WizardForm.Handle);
 END;
 
-//Ö÷½çÃæä¯ÀÀ°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//ä¸»ç•Œé¢æµè§ˆæŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_browse_on_click(hBtn : HWND);
 BEGIN
   WizardForm.DirBrowseButton.OnClick(WizardForm);
   edit_target_path.Text := WizardForm.DirEdit.Text;
 END;
 
-//Â·¾¶ÊäÈë¿òÎÄ±¾±ä»¯Ê±Ö´ĞĞµÄ½Å±¾
+//è·¯å¾„è¾“å…¥æ¡†æ–‡æœ¬å˜åŒ–æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE edit_target_path_on_change(Sender : TObject);
 BEGIN
   WizardForm.DirEdit.Text := edit_target_path.Text;
 END;
 
-//Í¬ÒâĞí¿ÉĞ­ÒéµÄ¸´Ñ¡¿ò±»µã»÷Ê±Ö´ĞĞµÄ½Å±¾
+//åŒæ„è®¸å¯åè®®çš„å¤é€‰æ¡†è¢«ç‚¹å‡»æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE checkbox_license_on_click(hBtn : HWND);
 BEGIN
     IF BtnGetChecked(checkbox_license) THEN
@@ -245,7 +247,7 @@ BEGIN
     END;
 END;
 
-//ÉèÎªÄ¬ÈÏÈí¼şµÄ¸´Ñ¡¿ò±»µã»÷Ê±Ö´ĞĞµÄ½Å±¾
+//è®¾ä¸ºé»˜è®¤è½¯ä»¶çš„å¤é€‰æ¡†è¢«ç‚¹å‡»æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE checkbox_setdefault_on_click(hBtn : HWND);
 BEGIN
   IF BtnGetChecked(checkbox_setdefault) THEN
@@ -257,23 +259,23 @@ BEGIN
   END;
 END;
 
-//·µ»ØÉèÎªÄ¬ÈÏÈí¼ş¸´Ñ¡¿òµÄ×´Ì¬£¬ÒÑ¹´Ñ¡Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+//è¿”å›è®¾ä¸ºé»˜è®¤è½¯ä»¶å¤é€‰æ¡†çš„çŠ¶æ€ï¼Œå·²å‹¾é€‰åˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 FUNCTION is_setdefault_checkbox_checked() : BOOLEAN;
 BEGIN
   Result := need_to_change_associations;
 END;
 
-//ÈôÉèÎªÄ¬ÈÏÈí¼şµÄ¸´Ñ¡¿ò±»¹´Ñ¡£¬Ôò»áÔÚÎÄ¼ş¸´ÖÆ½áÊøÊ±Ö´ĞĞ´Ë¶Î½Å±¾
+//è‹¥è®¾ä¸ºé»˜è®¤è½¯ä»¶çš„å¤é€‰æ¡†è¢«å‹¾é€‰ï¼Œåˆ™ä¼šåœ¨æ–‡ä»¶å¤åˆ¶ç»“æŸæ—¶æ‰§è¡Œæ­¤æ®µè„šæœ¬
 PROCEDURE check_if_need_change_associations();
 BEGIN
   IF is_setdefault_checkbox_checked() THEN
   BEGIN
     //TODO
-    //MsgBox('´Ë´¦Ö´ĞĞ×¢²áÎÄ¼şºó×ºÃûµÄ²Ù×÷¡£', mbInformation, MB_OK);
+    //MsgBox('æ­¤å¤„æ‰§è¡Œæ³¨å†Œæ–‡ä»¶åç¼€åçš„æ“ä½œã€‚', mbInformation, MB_OK);
   END;
 END;
 
-//Ö÷½çÃæ°²×°°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//ä¸»ç•Œé¢å®‰è£…æŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_setup_or_next_on_click(hBtn : HWND);
 var
   ResultStr: String;
@@ -293,7 +295,7 @@ BEGIN
   WizardForm.NextButton.OnClick(WizardForm);
 END;
 
-//¸´ÖÆÎÄ¼şÊ±Ö´ĞĞµÄ½Å±¾£¬Ã¿¸´ÖÆ1%¶¼»á±»µ÷ÓÃÒ»´Î£¬ÈôÒªµ÷Õû½ø¶ÈÌõ»ò½ø¶ÈÌáÊ¾ÇëÔÚ´Ë¶ÎĞŞ¸Ä
+//å¤åˆ¶æ–‡ä»¶æ—¶æ‰§è¡Œçš„è„šæœ¬ï¼Œæ¯å¤åˆ¶1%éƒ½ä¼šè¢«è°ƒç”¨ä¸€æ¬¡ï¼Œè‹¥è¦è°ƒæ•´è¿›åº¦æ¡æˆ–è¿›åº¦æç¤ºè¯·åœ¨æ­¤æ®µä¿®æ”¹
 FUNCTION PBProc(h : hWnd; Msg, wParam, lParam : LONGINT) : LONGINT;
 VAR
   pr, i1, i2 : EXTENDED;
@@ -310,10 +312,13 @@ BEGIN
     ImgSetPosition(image_progressbar_foreground, 20, 374, w, 6);
     ImgSetVisiblePart(image_progressbar_foreground, 0, 0, w, 6);
     ImgApplyChanges(WizardForm.Handle);
+#ifdef EnableRoundRect
+	  shape_form_round(WizardForm,{#RoundRectData});
+#endif
   END;
 END;
 
-//ÔÄ¶ÁĞí¿ÉĞ­ÒéµÄ°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//é˜…è¯»è®¸å¯åè®®çš„æŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_license_on_click(hBtn : HWND);
 VAR
   ErrorCode : INTEGER;
@@ -321,35 +326,35 @@ BEGIN
   ShellExec('', '{#MyAppLicenseURL}', '', '', SW_SHOW, ewNoWait, ErrorCode);
 END;
 
-//È¡Ïû°²×°µ¯¿òµÄÈ·¶¨°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//å–æ¶ˆå®‰è£…å¼¹æ¡†çš„ç¡®å®šæŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_messagebox_ok_on_click(hBtn : HWND);
 BEGIN
   can_exit_setup := TRUE;
   messagebox_close.Close();
 END;
 
-//È¡Ïû°²×°µ¯¿òµÄÈ¡Ïû°´Å¥°´ÏÂÊ±Ö´ĞĞµÄ½Å±¾
+//å–æ¶ˆå®‰è£…å¼¹æ¡†çš„å–æ¶ˆæŒ‰é’®æŒ‰ä¸‹æ—¶æ‰§è¡Œçš„è„šæœ¬
 PROCEDURE button_messagebox_cancel_on_click(hBtn : HWND);
 BEGIN
   can_exit_setup := FALSE;
   messagebox_close.Close();
 END;
 
-//Ö÷½çÃæ±»µã×¡¾ÍËæÊó±êÒÆ¶¯µÄ½Å±¾
+//ä¸»ç•Œé¢è¢«ç‚¹ä½å°±éšé¼ æ ‡ç§»åŠ¨çš„è„šæœ¬
 PROCEDURE wizardform_on_mouse_down(Sender : TObject; Button : TMouseButton; Shift : TShiftState; X, Y : INTEGER);
 BEGIN
   ReleaseCapture();
   SendMessage(WizardForm.Handle, WM_SYSCOMMAND, $F012, 0);
 END;
 
-//È¡Ïûµ¯¿ò±»µã×¡¾ÍËæÊó±êÒÆ¶¯µÄ½Å±¾
+//å–æ¶ˆå¼¹æ¡†è¢«ç‚¹ä½å°±éšé¼ æ ‡ç§»åŠ¨çš„è„šæœ¬
 PROCEDURE messagebox_on_mouse_down(Sender : TObject; Button : TMouseButton; Shift : TShiftState; X, Y : INTEGER);
 BEGIN
   ReleaseCapture();
   SendMessage(messagebox_close.Handle, WM_SYSCOMMAND, $F012, 0);
 END;
 
-//ÅĞ¶ÏÏµÍ³ÊÇ·ñÎªWin7£¬ÊÇÔò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+//åˆ¤æ–­ç³»ç»Ÿæ˜¯å¦ä¸ºWin7ï¼Œæ˜¯åˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 PROCEDURE determine_wether_is_windows_7_or_not();
 VAR
   sysVersion : TWindowsVersion;
@@ -364,7 +369,7 @@ BEGIN
   END;
 END;
 
-//´´½¨È¡Ïûµ¯¿òµÄ½Å±¾
+//åˆ›å»ºå–æ¶ˆå¼¹æ¡†çš„è„šæœ¬
 PROCEDURE messagebox_close_create();
 BEGIN
   messagebox_close := CreateCustomForm();
@@ -388,7 +393,7 @@ BEGIN
     Font.Name := 'Microsoft YaHei';
     Font.Size := 10;
     Font.Color := clWhite;
-    Caption := '{#MyAppName} °²×°';
+    Caption := '{#MyAppName} å®‰è£…';
     Transparent := TRUE;
     OnMouseDown := @messagebox_on_mouse_down;
   END;
@@ -404,7 +409,7 @@ BEGIN
     Font.Name := 'Microsoft YaHei';
     Font.Size := 10;
     Font.Color := clBlack;
-    Caption := 'ÄúÈ·¶¨ÒªÍË³ö¡°{#MyAppName}¡±°²×°³ÌĞò£¿';
+    Caption := 'æ‚¨ç¡®å®šè¦é€€å‡ºâ€œ{#MyAppName}â€å®‰è£…ç¨‹åºï¼Ÿ';
     Transparent := TRUE;
     OnMouseDown := @messagebox_on_mouse_down;
   END;
@@ -434,7 +439,7 @@ BEGIN
 #endif
 END;
 
-//ÊÍ·Å°²×°³ÌĞòÊ±µ÷ÓÃµÄ½Å±¾
+//é‡Šæ”¾å®‰è£…ç¨‹åºæ—¶è°ƒç”¨çš„è„šæœ¬
 PROCEDURE release_installer();
 BEGIN
   gdipShutdown();
@@ -442,14 +447,14 @@ BEGIN
   WizardForm.Release();
 END;
 
-//ÔÚ³õÊ¼»¯Ö®ºóÊÍ·Å°²×°³ÌĞòµÄ½Å±¾
+//åœ¨åˆå§‹åŒ–ä¹‹åé‡Šæ”¾å®‰è£…ç¨‹åºçš„è„šæœ¬
 PROCEDURE release_installer_after_init();
 BEGIN
   messagebox_close.Release();
   WizardForm.Release();
 END;
 
-//ÊÍ·ÅĞèÒªµÄÁÙÊ±×ÊÔ´ÎÄ¼ş
+//é‡Šæ”¾éœ€è¦çš„ä¸´æ—¶èµ„æºæ–‡ä»¶
 PROCEDURE extract_temp_files();
 BEGIN
   ExtractTemporaryFile('button_customize_setup.png');
@@ -475,7 +480,7 @@ BEGIN
   ExtractTemporaryFile('button_ok.png');
 END;
 
-//ÖØÔØÖ÷½çÃæÈ¡Ïû°´Å¥±»°´ÏÂºóµÄ´¦Àí¹ı³Ì
+//é‡è½½ä¸»ç•Œé¢å–æ¶ˆæŒ‰é’®è¢«æŒ‰ä¸‹åçš„å¤„ç†è¿‡ç¨‹
 PROCEDURE CancelButtonClick(CurPageID : INTEGER; VAR Cancel, Confirm: BOOLEAN);
 BEGIN
   Confirm := FALSE;
@@ -491,7 +496,7 @@ BEGIN
   END;
 END;
 
-//ÖØÔØ°²×°³ÌĞò³õÊ¼»¯º¯Êı£¬ÅĞ¶ÏÊÇ·ñÒÑ¾­°²×°ĞÂ°æ±¾£¬ÊÇÔò½ûÖ¹°²×°
+//é‡è½½å®‰è£…ç¨‹åºåˆå§‹åŒ–å‡½æ•°ï¼Œåˆ¤æ–­æ˜¯å¦å·²ç»å®‰è£…æ–°ç‰ˆæœ¬ï¼Œæ˜¯åˆ™ç¦æ­¢å®‰è£…
 FUNCTION InitializeSetup() : BOOLEAN;
 BEGIN
 #ifndef PortableBuild
@@ -500,7 +505,7 @@ BEGIN
   BEGIN
     IF is_installing_older_version() THEN
     BEGIN
-      MsgBox('ÄúÒÑ°²×°¸üĞÂ°æ±¾µÄ¡°{#MyAppName}¡±£¬²»ÔÊĞíÊ¹ÓÃ¾É°æ±¾Ìæ»»ĞÂ°æ±¾£¬Çëµ¥»÷¡°È·¶¨¡±°´Å¥ÍË³ö´Ë°²×°³ÌĞò¡£', mbInformation, MB_OK);
+      MsgBox('æ‚¨å·²å®‰è£…æ›´æ–°ç‰ˆæœ¬çš„â€œ{#MyAppName}â€ï¼Œä¸å…è®¸ä½¿ç”¨æ—§ç‰ˆæœ¬æ›¿æ¢æ–°ç‰ˆæœ¬ï¼Œè¯·å•å‡»â€œç¡®å®šâ€æŒ‰é’®é€€å‡ºæ­¤å®‰è£…ç¨‹åºã€‚', mbInformation, MB_OK);
       Result := FALSE;
     END ELSE
     BEGIN
@@ -520,7 +525,7 @@ BEGIN
 
 END;
 
-//ÖØÔØ°²×°³ÌĞò³õÊ¼»¯º¯Êı£¨ºÍÉÏ±ßÄÇ¸ö²»Ò»Ñù£©£¬½øĞĞ³õÊ¼»¯²Ù×÷
+//é‡è½½å®‰è£…ç¨‹åºåˆå§‹åŒ–å‡½æ•°ï¼ˆå’Œä¸Šè¾¹é‚£ä¸ªä¸ä¸€æ ·ï¼‰ï¼Œè¿›è¡Œåˆå§‹åŒ–æ“ä½œ
 PROCEDURE InitializeWizard();
 BEGIN
   isFirst := TRUE;
@@ -556,27 +561,27 @@ BEGIN
     Font.Name := 'Microsoft YaHei';
     Font.Size := 9;
     Font.Color := clWhite;
-    Caption := '{#MyAppName} V{#MyAppVersion} °²×°';
+    Caption := '{#MyAppName} V{#MyAppVersion} å®‰è£…';
     Transparent := TRUE;
     OnMouseDown := @wizardform_on_mouse_down;
   END;
-  label_wizardform_more_product_already_installed := TLabel.Create(WizardForm);
-  WITH label_wizardform_more_product_already_installed DO
-  BEGIN
-    Parent := WizardForm;
-    AutoSize := FALSE;
-    Left := 85;
-    Top := 449;
-    Width := 200;
-    Height := 20;
-    Font.Name := 'Microsoft YaHei';
-    Font.Size := 9;
-    Font.Color := clGray;
-    Caption := 'Èí¼şÒÑ¾­°²×°£¬²»ÔÊĞí¸ü»»Ä¿Â¼¡£';
-    Transparent := TRUE;
-    OnMouseDown := @wizardform_on_mouse_down;
-  END;
-  label_wizardform_more_product_already_installed.Hide();
+  //label_wizardform_more_product_already_installed := TLabel.Create(WizardForm);
+ // WITH label_wizardform_more_product_already_installed DO
+ // BEGIN
+ //   Parent := WizardForm;
+ //   AutoSize := FALSE;
+ //   Left := 85;
+ //   Top := 449;
+ //   Width := 200;
+  //  Height := 20;
+ //   Font.Name := 'Microsoft YaHei';
+  //  Font.Size := 9;
+  //  Font.Color := clGray;
+  //  Caption := 'è½¯ä»¶å·²ç»å®‰è£…ï¼Œä¸å…è®¸æ›´æ¢ç›®å½•ã€‚';
+  //  Transparent := TRUE;
+  //  OnMouseDown := @wizardform_on_mouse_down;
+  //END;
+  //label_wizardform_more_product_already_installed.Hide();
   label_wizardform_main := TLabel.Create(WizardForm);
   WITH label_wizardform_main DO
   BEGIN
@@ -626,7 +631,7 @@ BEGIN
 #endif
 END;
 
-//°²×°³ÌĞòÏú»ÙÊ±»áµ÷ÓÃÕâ¸öº¯Êı
+//å®‰è£…ç¨‹åºé”€æ¯æ—¶ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°
 PROCEDURE DeinitializeSetup();
 BEGIN
   IF ((is_wizardform_released = FALSE) AND (can_exit_setup = FALSE)) THEN
@@ -639,7 +644,7 @@ BEGIN
   END;
 END;
 
-//°²×°Ò³Ãæ¸Ä±äÊ±»áµ÷ÓÃÕâ¸öº¯Êı
+//å®‰è£…é¡µé¢æ”¹å˜æ—¶ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°
 PROCEDURE CurPageChanged(CurPageID : INTEGER);
 BEGIN
   IF (CurPageID = wpWelcome) THEN
@@ -665,7 +670,7 @@ BEGIN
   IF (CurPageID = wpInstalling) THEN
   BEGIN
     edit_target_path.Hide();
-    label_wizardform_more_product_already_installed.Hide();
+    //label_wizardform_more_product_already_installed.Hide();
     BtnSetVisibility(button_browse, FALSE);
     WizardForm.Height := WIZARDFORM_HEIGHT_NORMAL;
     is_wizardform_show_normal := TRUE;
@@ -717,7 +722,7 @@ BEGIN
   END;
 END;
 
-//°²×°²½Öè¸Ä±äÊ±»áµ÷ÓÃÕâ¸öº¯Êı
+//å®‰è£…æ­¥éª¤æ”¹å˜æ—¶ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°
 //PROCEDURE CurStepChanged(CurStep : TSetupStep);
 //BEGIN
 //  IF (CurStep = ssPostInstall) THEN
@@ -734,7 +739,7 @@ END;
 //  END;
 //END;
 
-//Ö¸¶¨Ìø¹ıÄÄĞ©±ê×¼Ò³Ãæ
+//æŒ‡å®šè·³è¿‡å“ªäº›æ ‡å‡†é¡µé¢
 FUNCTION ShouldSkipPage(PageID : INTEGER) : BOOLEAN;
 BEGIN
   IF (PageID = wpLicense) THEN Result := TRUE;
@@ -749,12 +754,12 @@ BEGIN
   IF (PageID = wpPreparing) THEN Result := TRUE;
   IF (PageID = wpInfoAfter) THEN Result := TRUE;
 END;
-//Ğ¶ÔØ²½Öè¸Ä±äÊ±»áµ÷ÓÃ´Ëº¯Êı
+//å¸è½½æ­¥éª¤æ”¹å˜æ—¶ä¼šè°ƒç”¨æ­¤å‡½æ•°
 PROCEDURE CurUninstallStepChanged(CurUninstallStep : TUninstallStep);
 BEGIN
   IF (CurUninstallStep = usAppMutexCheck) THEN
   BEGIN
-    //´Ë½×¶ÎÎª¼ì²éÓ¦ÓÃ³ÌĞò»¥³âµÄ½×¶Î£¬ÇëÔÚ´Ë½øĞĞ»¥³â²Ù×÷
+    //æ­¤é˜¶æ®µä¸ºæ£€æŸ¥åº”ç”¨ç¨‹åºäº’æ–¥çš„é˜¶æ®µï¼Œè¯·åœ¨æ­¤è¿›è¡Œäº’æ–¥æ“ä½œ
   END;
 END;
 
@@ -764,14 +769,14 @@ uninspath, uninsname, NewUninsName : string;
 begin
 if CurStep=ssDone then
 begin
-// Ö¸¶¨ĞÂµÄĞ¶ÔØÎÄ¼şÃû£¨²»°üº¬À©Õ¹Ãû£©£¬ÇëÏàÓ¦ĞŞ¸Ä£¡
-NewUninsName := 'Ğ¶ÔØ';
-// ÒÔÏÂÖØÃüÃûĞ¶ÔØÎÄ¼ş
+// æŒ‡å®šæ–°çš„å¸è½½æ–‡ä»¶åï¼ˆä¸åŒ…å«æ‰©å±•åï¼‰ï¼Œè¯·ç›¸åº”ä¿®æ”¹ï¼
+NewUninsName := 'å¸è½½';
+// ä»¥ä¸‹é‡å‘½åå¸è½½æ–‡ä»¶
 uninspath:= ExtractFilePath(ExpandConstant('{uninstallexe}'));
 uninsname:= Copy(ExtractFileName(ExpandConstant('{uninstallexe}')),1,8);
 RenameFile(uninspath + uninsname + '.exe', uninspath + NewUninsName + '.exe');
 RenameFile(uninspath + uninsname + '.dat', uninspath + NewUninsName + '.dat');
-// ÒÔÏÂĞŞ¸ÄÏàÓ¦µÄ×¢²á±íÄÚÈİ
+// ä»¥ä¸‹ä¿®æ”¹ç›¸åº”çš„æ³¨å†Œè¡¨å†…å®¹
 if RegKeyExists(HKEY_LOCAL_MACHINE, PRODUCT_REGISTRY_KEY_64) then
 begin
 RegWriteStringValue(HKEY_LOCAL_MACHINE, PRODUCT_REGISTRY_KEY_64, 'UninstallString', '"' + uninspath + NewUninsName + '.exe"');

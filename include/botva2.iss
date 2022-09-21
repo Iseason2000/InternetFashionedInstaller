@@ -1,4 +1,4 @@
-//ÕâÀï´æ·ÅµÄÊÇbotva2µÄº¯ÊýÉùÃ÷
+ï»¿//è¿™é‡Œå­˜æ”¾çš„æ˜¯botva2çš„å‡½æ•°å£°æ˜Ž
 
 [Code]
 TYPE
